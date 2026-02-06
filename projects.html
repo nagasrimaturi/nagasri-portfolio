@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nagasri Maturi - Portfolio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<link href="transition.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+:root {
+--neon-green: #00FF9D;
+--dark-bg: #0D1117;
+}
+body {
+background-color: var(--dark-bg);
+color: white;
+min-height: 100vh;
+}
+.neon-border {
+position: relative;
+}
+.neon-border::after {
+content: '';
+position: absolute;
+top: -2px;
+left: -2px;
+right: -2px;
+bottom: -2px;
+border: 2px solid var(--neon-green);
+border-radius: inherit;
+opacity: 0.5;
+pointer-events: none;
+}
+.hexagon {
+clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.nav-link {
+position: relative;
+}
+.nav-link::after {
+content: '';
+position: absolute;
+width: 0;
+height: 2px;
+bottom: -4px;
+left: 0;
+background-color: var(--neon-green);
+transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+width: 100%;
+}
+.service-card {
+transition: transform 0.3s ease;
+}
+.service-card:hover {
+transform: translateY(-10px);
+}
+.project-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 255, 157, 0.1);
+}
+.project-item:hover .project-overlay {
+    opacity: 1;
+}
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(13, 17, 23, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.view-details {
+    color: var(--neon-green);
+    border: 2px solid var(--neon-green);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.view-details:hover {
+    background: var(--neon-green);
+    color: var(--dark-bg);
+}
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-bg);
+    transform: translateX(100%);
+    z-index: 9999;
+    pointer-events: none;
+    transition: transform 0.4s ease;
+}
+
+.page-transition::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--neon-green);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+}
+
+.page-transition.active {
+    transform: translateX(0);
+}
+
+.page-transition.active::before {
+    transform: scaleY(1);
+}
+
+/* Dynamic Background */
+
+
+#projects {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--dark-bg);
+}
+
+#projects::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(0, 255, 157, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 157, 0.03) 0%, transparent 40%);
+    z-index: -1;
+    animation: subtleGlow 20s ease infinite;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+#projects::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: 
+        repeating-linear-gradient(45deg,
+            rgba(0, 255, 157, 0.01) 0%,
+            transparent 2%,
+            transparent 5%
+        );
+    z-index: -2;
+    animation: subtlePattern 30s linear infinite;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+
+@keyframes subtleGlow {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes subtlePattern {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+</style>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#00FF9D',
+secondary: '#1A1E23'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+</head>
+<body class="font-sans">
+<header class="fixed w-full top-0 z-50 bg-[#0D1117] border-b border-gray-800">
+<nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+<a href="index.html" class="text-3xl font-['Pacifico'] text-primary">NM</a>
+<div class="hidden md:flex space-x-8">
+<a href="index.html" class="nav-link text-white hover:text-primary">HOME</a>
+<a href="about.html" class="nav-link text-white hover:text-primary">ABOUT</a>
+<a href="projects.html" class="nav-link text-white hover:text-primary">PROJECTS</a>
+<a href="education.html" class="nav-link text-white hover:text-primary">EDUCATION</a>
+<a href="certifications.html" class="nav-link text-white hover:text-primary">CERTIFICATIONS</a>
+<a href="contact.html" class="nav-link text-white hover:text-primary">CONTACT</a>
+</div>
+<button class="md:hidden text-white focus:outline-none">
+<i class="ri-menu-line text-2xl"></i>
+</button>
+</nav>
+</header>
+<main class="pt-20">
+<section id="projects" class="bg-[#0D1117] py-12">
+<div class="container mx-auto px-6">
+<div class="flex justify-between items-center mb-16">
+<h2 class="text-3xl font-bold">Projects</h2>
+<div class="relative">
+    <select id="categoryFilter" class="bg-[#1A1E23] text-white px-4 py-2 rounded-lg appearance-none pr-8 cursor-pointer">
+        <option value="all">All Categories</option>
+        <option value="Computer Vision">Computer Vision</option>
+        <option value="Machine Learning">Machine Learning</option>
+        <option value="Deep Learning">Deep Learning</option>
+        <option value="Large Language model">LLM</option>
+        <option value="Generative AI">Generative AI</option>
+        <option value="Natural Language Processing">NLP</option>
+        <option value="Reinforcement Learning">Reinforcement Learning</option>
+        
+    </select>
+    <i class="ri-arrow-down-s-line absolute right-2 top-1/2 -translate-y-1/2 text-white pointer-events-none"></i>
+</div>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8" id="projectsGrid">
+<div class="bg-[#0D1117] rounded-lg overflow-hidden group cursor-pointer project-item relative" onclick="showProjectDetails(1)">
+    <div class="h-48 bg-gray-800 flex items-center justify-center relative">
+        <img src="https://public.readdy.ai/ai/img_res/725a8a3de127e187ba1659343cf54c2d.jpg" alt="Prosense" class="w-full h-full object-cover">
+        <div class="project-overlay">
+            <span class="view-details">View Details</span>
+        </div>
+    </div>
+    <div class="p-4">
+        <h3 class="text-xl font-bold mb-2">Prosense - LLM Defense</h3>
+        <p class="text-gray-400 text-sm">Generative AI</p>
+    </div>
+</div>    
+<div class="bg-[#0D1117] rounded-lg overflow-hidden group cursor-pointer project-item relative" onclick="showProjectDetails(2)">
+    <div class="h-48 bg-gray-800 flex items-center justify-center relative">
+        <img src="https://public.readdy.ai/ai/img_res/97d73600689cc411a29029f847650ea4.jpg" alt="Network Security Project" class="w-full h-full object-cover">
+        <div class="project-overlay">
+            <span class="view-details">View Details</span>
+        </div>
+    </div>
+    <div class="p-4">
+        <h3 class="text-xl font-bold mb-2">Optimizing Network Security via Ensemble Learning</h3>
+        <p class="text-gray-400 text-sm">Machine Learning</p>
+    </div>
+</div>
+
+<div class="bg-[#0D1117] rounded-lg overflow-hidden group cursor-pointer project-item relative" onclick="showProjectDetails(3)">
+    <div class="h-48 bg-gray-800 flex items-center justify-center relative">
+        <img src="https://public.readdy.ai/ai/img_res/84c9c7d43ca85617c49dbb0554400ab0.jpg" alt="Full Stack Amazon Clone" class="w-full h-full object-cover">
+        <div class="project-overlay">
+            <span class="view-details">View Details</span>
+        </div>
+    </div>
+    <div class="p-4">
+        <h3 class="text-xl font-bold mb-2">End-to-End MLOps Pipeline for Customer Churn Prediction</h3>
+        <p class="text-gray-400 text-sm">MLOps</p>
+    </div>
+</div>  
+
+<div class="bg-[#0D1117] rounded-lg overflow-hidden group cursor-pointer project-item relative" onclick="showProjectDetails(3)">
+    <div class="h-48 bg-gray-800 flex items-center justify-center relative">
+        <img src="https://public.readdy.ai/ai/img_res/84c9c7d43ca85617c49dbb0554400ab0.jpg" alt="Full Stack Amazon Clone" class="w-full h-full object-cover">
+        <div class="project-overlay">
+            <span class="view-details">View Details</span>
+        </div>
+    </div>
+    <div class="p-4">
+        <h3 class="text-xl font-bold mb-2">Full Stack Amazon Clone</h3>
+        <p class="text-gray-400 text-sm">Full Stack</p>
+    </div>
+</div>  
+
+<div class="bg-[#0D1117] rounded-lg overflow-hidden group cursor-pointer project-item relative" onclick="showProjectDetails(4)">
+    <div class="h-48 bg-gray-800 flex items-center justify-center relative">
+        <img src="https://public.readdy.ai/ai/img_res/1ccdf032fb1b8ee964c5bb61c628b4b6.jpg" alt="Deepfake Detection" class="w-full h-full object-cover">
+        <div class="project-overlay">
+            <span class="view-details">View Details</span>
+        </div>
+    </div>
+    <div class="p-4">
+        <h3 class="text-xl font-bold mb-2">Deepfake Detection</h3>
+        <p class="text-gray-400 text-sm">Computer Vision</p>
+    </div>
+</div>
+</div>
+
+<!-- Project Details Modal -->
+<dialog id="projectModal" class="bg-transparent p-0 w-full h-full max-w-none max-h-none m-0">
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-[#0D1117] p-8 rounded-lg w-full max-w-2xl relative">
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="ri-close-line text-2xl"></i>
+            </button>
+            <div id="projectContent"></div>
+        </div>
+    </div>
+</dialog>
+
+<script>
+// Project details functionality
+function showProjectDetails(projectId) {
+    const modal = document.getElementById('projectModal');
+    const content = document.getElementById('projectContent');
+    
+    if (projectDetails[projectId]) {
+        content.innerHTML = projectDetails[projectId].description;
+        modal.showModal();
+    }
+}
+
+function closeProjectModal() {
+    const modal = document.getElementById('projectModal');
+    modal.close();
+}
+
+// Close modal when clicking outside
+document.getElementById('projectModal').addEventListener('click', function(e) {
+    const dialogDimensions = this.getBoundingClientRect();
+    if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+    ) {
+        closeProjectModal();
+    }
+});
+
+// Prevent click propagation from modal content
+document.querySelector('#projectModal > div').addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+
+// Add styles for the dialog
+const style = document.createElement('style');
+style.textContent = `
+    dialog {
+        border: none;
+        background: transparent;
+    }
+    dialog::backdrop {
+        background: transparent;
+    }
+`;
+document.head.appendChild(style);
+
+// Load all projects data upfront
+const allProjects = {
+    visible: [
+        {
+            id: 1,
+            title: "AI Resume Reviewer",
+            category: "Generative AI & LLM",
+            image: "AIML1.png"
+        },
+        
+        {
+            id: 2,
+            title: "FastAPI Notes App",
+            category: "Generative AI",
+            image: "FastAPI.png"
+        },
+
+        {
+            id: 3,
+            title: "Employee Salary Predicitions",
+            category: "Machine Learning",
+            image: "employee.png"
+        },
+        {
+            id: 9,
+            title: "Simple CohereChatBot",
+            category: "LLM",
+            image: "Simple.png"
+        },
+    ],
+    hidden: [    
+        {
+            id: 6,
+            title: "Image Caption Generator",
+            category: "Computer Vision & NLP",
+            image: "https://public.readdy.ai/ai/img_res/ce4aabfbdfd58643f7f4d97beee11e79.jpg"
+        },
+    
+   
+        {
+            id: 5,
+            title: "NLP ChatBot",
+            category: "NLP",
+            image: "NLP1.png"
+        },
+        {
+            id: 8,
+            title: "Used Car Price Prediction",
+            category: "Machine Learning",
+            image: "https://public.readdy.ai/ai/img_res/ec34e970a7a958ed747aa47d11ac7754.jpg"
+        }
+    ]
+};
+
+// Project details data
+const projectDetails = {
+   
+    
+    1: {
+        title: "AI Resume Reviewer",
+        description: `
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-primary mb-4">Project Overview</h2>
+                <div class="space-y-2">
+                    <p class="text-gray-300">• This project is an AI-powered resume reviewer that analyzes resumes in PDF format using an offline Large Language Model (LLaMA).</p>
+                    <p class="text-gray-300">• It extracts resume content and generates a summary, strengths, weaknesses, improvement suggestions, and missing ATS keywords. The application runs locally and provides an interactive web interface using Gradio.</p>
+                    <p class="text-gray-300">• It demonstrates how local LLMs can be used for practical, real-world applications without relying on cloud APIs.
+The project combines PDF processing, prompt engineering, and language-model reasoning to deliver structured resume insights.</p>
+                    <div class="mt-4">
+                        <a href="https://github.com/nagasrimaturi/AI_RESUME_REVIEWER" target="_blank" class="text-primary hover:underline flex items-center">
+                            <i class="ri-github-fill mr-2"></i>View on GitHub
+                        </a>
+                </div>
+            </div>
+        `
+    },
+    2:  {
+        title: "FastAPI Notes App",
+        description: `
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-primary mb-4">Project Overview</h2>
+                <div class="space-y-2">
+                    <p class="text-gray-300">• Developed a FastAPI-based backend application with RESTful endpoints for note creation and retrieval.Implemented SQLite database integration using SQLAlchemy for persistent data storage.Added pagination and search functionality to improve API scalability and usability..</p>
+                    <p class="text-gray-300">• Integrated Generative AI (LLM API) to summarize user-provided text into structured outputs.Implemented proper error handling for external API failures and quota limitations.</p>
+                    <p class="text-gray-300">• Documented APIs using Swagger UI and provided clear project documentation.</p>
+                    <div class="mt-4">
+                        <a href="https://github.com/nagasrimaturi/fastapi-notes-app" target="_blank" class="text-primary hover:underline flex items-center">
+                            <i class="ri-github-fill mr-2"></i>View on GitHub
+                        </a>
+                </div>
+            </div>
+        `
+    },
+    3: {
+        title: "Employee salary prediction",
+        description: `
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-primary mb-4">Project Overview</h2>
+                <div class="space-y-2">
+                    <p class="text-gray-300">•This project is an Employee Salary Classification app built using supervised machine learning.It predicts whether an employee earns more than 50K or less than/equal to 50K based on personal and job-related features.
+A Gradient Boosting model was selected as the best performer and deployed using Streamlit.It supports both single predictions through user input and batch predictions using CSV uploads.
+The app provides an easy-to-use interface for testing the model and downloading predicted results.</p>
+                <a href="https://github.com/nagasrimaturi/Employee_salary_prediction_Nagasri/tree/main" target="_blank" class="text-primary hover:underline flex items-center">
+                        <i class="ri-github-fill mr-2"></i>View on GitHub
+                    </a>
+                </div>
+            </div>
+        `
+    },
+    9: {
+        title: "Simple CoherChatBot",
+        description: `
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-primary mb-4">Project Overview</h2>
+                <div class="space-y-2">
+                    <p class="text-gray-300">• The chatbot sends user messages to the Cohere API and receives AI-generated replies.It keeps limited chat history to maintain conversation context.</p>
+                    <p class="text-gray-300">•The project demonstrates a basic Generative AI application using an external LLM API.</p>
+                    <a href="https://github.com/nagasrimaturi/cohere-multimode-chatbot" target="_blank" class="text-primary hover:underline flex items-center">
+                        <i class="ri-github-fill mr-2"></i>View on GitHub
+                    </a>
+                </div>
+            </div>
+        `
+    },
+    8: {
+        title: "Used Car Price Prediction",
+        description: `
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-primary mb-4">Project Overview</h2>
+                <div class="space-y-2">
+                    <p class="text-gray-300">• Developed Used Car Prediction application, employing Machine Learning Algorithms within Google Colab. Achieved error rate of 0.0021 utilizing Multiple Linear Regression to analyze and predict car prices based on customer-provided details.</p>
+                    <p class="text-gray-300">• Conducted comprehensive analysis by systematically comparing prediction errors across three prominent Machine Learning methods – Decision Tree, Random Forest, and Multiple Linear Regression. Curated the dataset from Kaggle website.</p>
+                    <a href="https://github.com/nagasrimaturi/Used_Car_Price_Prediction" target="_blank" class="text-primary hover:underline flex items-center">
+                        <i class="ri-github-fill mr-2"></i>View on GitHub
+                    </a>
+                </div>
+            </div>
+        `
+    },
+    
+    6: {
+        title: "Image Caption Generator",
+        description: `
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-primary mb-4">Project Overview</h2>
+                <div class="space-y-2">
+                    <p class="text-gray-300">• Designed this system by leveraging Deep Learning Methodologies, specifically employing Convolutional Neural Networks (CNN) and Long Short-Term Memory (LSTM) techniques. Sourced and curated dataset from Kaggle to train the model effectively.</p>
+                    <p class="text-gray-300">• Demonstrated proficiency by achieving a BLEU Score of 0.57. This project underscores my expertise in applying advanced technologies to solve real-world challenges in computer vision and natural language processing.</p>
+                </div>
+            </div>
+        `
+    },
+    5: {
+        title: "NLP ChatBot",
+        description: `
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-primary mb-4">Project Overview</h2>
+                <div class="space-y-2">
+                    <p class="text-gray-300">• A simple NLP-based chatbot that uses keyword matching and sentiment analysis to respond intelligently to user queries.</p>
+                    <p class="text-gray-300">• It helps simulate a basic customer-support experience by handling greetings, store hours, and return-related queries.This project highlights foundational NLP concepts and serves as a stepping stone toward more advanced conversational AI systems.</p>
+                    <a href="https://github.com/nagasrimaturi/python_projects_build_ai_applications" target="_blank" class="text-primary hover:underline flex items-center">
+                        <i class="ri-github-fill mr-2"></i>View on GitHub
+                    </a>
+                </div>
+            </div>
+        `
+    }
+};
+
+// Category filtering functionality
+function filterProjects() {
+    const selectedCategory = document.getElementById('categoryFilter').value;
+    const projectsContainer = document.getElementById('projectsGrid');
+    const loadMoreButton = document.querySelector('button[onclick="loadMoreProjects()"]');
+    
+    // Clear existing projects
+    projectsContainer.innerHTML = '';
+    
+    // Function to check if project matches category
+    function matchesCategory(project) {
+        if (selectedCategory === 'all') return true;
+        
+        const categoryLower = project.category.toLowerCase();
+        const selectedLower = selectedCategory.toLowerCase();
+        
+        if (selectedLower === 'nlp' || selectedLower === 'natural language processing') {
+            return categoryLower.includes('nlp') || 
+                   categoryLower.includes('natural language processing') ||
+                   categoryLower.includes('llm');
+        }
+        
+        if (selectedLower === 'reinforcement learning') {
+            return categoryLower.includes('reinforcement learning') || 
+                   categoryLower.includes('rl');
+        }
+        
+        return categoryLower.includes(selectedLower);
+    }
+    
+    // Function to create project element
+    function createProjectElement(project) {
+        return `
+            <div class="bg-[#0D1117] rounded-lg overflow-hidden group cursor-pointer project-item relative" onclick="showProjectDetails(${project.id})">
+                <div class="h-48 bg-gray-800 flex items-center justify-center relative">
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover">
+                    <div class="project-overlay">
+                        <span class="view-details">View Details</span>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-bold mb-2">${project.title}</h3>
+                    <p class="text-gray-400 text-sm">${project.category}</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Filter and display projects
+    const visibleProjects = allProjects.visible.filter(matchesCategory);
+    const hiddenProjects = allProjects.hidden.filter(matchesCategory);
+    
+    // Display visible projects
+    visibleProjects.forEach(project => {
+        projectsContainer.insertAdjacentHTML('beforeend', createProjectElement(project));
+    });
+    
+    // Handle hidden projects based on category and load more state
+    if (selectedCategory !== 'all' || window.isMoreProjectsLoaded) {
+        hiddenProjects.forEach(project => {
+            projectsContainer.insertAdjacentHTML('beforeend', createProjectElement(project));
+        });
+        if (loadMoreButton) {
+            loadMoreButton.style.display = 'none';
+        }
+    } else if (loadMoreButton) {
+        loadMoreButton.style.display = hiddenProjects.length > 0 ? 'inline-block' : 'none';
+    }
+}
+
+// Load more functionality
+window.isMoreProjectsLoaded = false;
+
+function loadMoreProjects() {
+    window.isMoreProjectsLoaded = true;
+    filterProjects();
+}
+
+// Initialize filtering when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryFilter = document.getElementById('categoryFilter');
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', filterProjects);
+        filterProjects();
+    }
+});
+</script>
+
+<div class="text-center mt-12">
+<button onclick="loadMoreProjects()" class="bg-[#0D1117] text-white px-8 py-3 rounded-lg hover:bg-gray-800">
+Load More
+</button>
+</div>
+</main>
+<script>
+document.querySelector('.md\\:hidden').addEventListener('click', function() {
+const nav = document.querySelector('.md\\:flex');
+nav.classList.toggle('hidden');
+nav.classList.toggle('flex');
+nav.classList.toggle('flex-col');
+nav.classList.toggle('absolute');
+nav.classList.toggle('top-16');
+nav.classList.toggle('left-0');
+nav.classList.toggle('w-full');
+nav.classList.toggle('bg-[#0D1117]');
+nav.classList.toggle('p-4');
+});
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+const targetId = this.getAttribute('href');
+const targetElement = document.querySelector(targetId);
+if (targetElement) {
+const headerOffset = 80;
+const elementPosition = targetElement.getBoundingClientRect().top;
+const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+window.scrollTo({
+top: offsetPosition,
+behavior: 'smooth'
+});
+}
+});
+});
+</script>
+<script src="transition.js"></script>
+</body>
+</html>
+
